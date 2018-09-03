@@ -23,22 +23,22 @@ import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import my.com.Util.DtoUtil;
 import my.com.annotation.Id;
 import my.com.annotation.RegisterDto;
 import my.com.base.BaseDao;
 
-@Intercepts({
-		@Signature(
-				type = Executor.class, method = "update", 
-				args = { MappedStatement.class,Object.class }),
-		@Signature(
-				type = Executor.class, method = "query", 
-				args = { MappedStatement.class,Object.class, RowBounds.class, ResultHandler.class }) 
-		})
+@Intercepts({ @Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class }),
+		@Signature(type = Executor.class, method = "query", args = { MappedStatement.class, Object.class,
+				RowBounds.class, ResultHandler.class }) })
+/*@Component*/
 public class BaseDaoInterceptor implements Interceptor {
+
+ 
 	
+
 	private static final Logger LOGGER = Logger.getLogger(BaseDaoInterceptor.class);
 	private static Method[] methods = BaseDao.class.getMethods();
 	private static Map<String, Class<?>> classMap = new ConcurrentHashMap<String, Class<?>>();
@@ -84,30 +84,31 @@ public class BaseDaoInterceptor implements Interceptor {
 
 	@Override
 	public void setProperties(Properties properties) {
-
+		System.out.println(properties.toString());
 	}
 
-	private void setObject(final MappedStatement statement, final Object parameter,
-			final String[] keys, String[] keyColumns) {
+	 
+	
+	private void setObject(final MappedStatement statement, final Object parameter, final String[] keys,
+			String[] keyColumns) {
 		if (statement.getSqlCommandType().equals(SqlCommandType.INSERT)) {
 			keys[0] = DtoUtil.id((Serializable) parameter);
 			if (keyColumns == null) {
 				keyColumns = new String[1];
 			}
-			if(keyColumns[0]!=null){
+			if (keyColumns[0] != null) {
 				keyColumns[0] = keys[0].replaceAll("([A-Z])", "_$1").toLowerCase();
 			}
-			
+
 		}
 	}
 
-	private void setTableName(Object parameter, Invocation invocation, Class<?> currentClass,
-			String methodId) throws InstantiationException, IllegalAccessException {
+	private void setTableName(Object parameter, Invocation invocation, Class<?> currentClass, String methodId)
+			throws InstantiationException, IllegalAccessException {
 		if (methodId.equals("queryById") || methodId.equals("deleteById")) {
 			Annotation a = currentClass.getAnnotation(RegisterDto.class);
 			if (a == null) {
-				LOGGER.error(currentClass.getName()
-						+ " not find annotation RegisterDto,please set it");
+				LOGGER.error(currentClass.getName() + " not find annotation RegisterDto,please set it");
 			}
 			Class<?> paramClass = ((RegisterDto) a).value();
 			Object param = paramClass.newInstance();
@@ -133,7 +134,7 @@ public class BaseDaoInterceptor implements Interceptor {
 					}
 					invocation.getArgs()[1] = param;
 					parameter = param;
-					break;					//新加
+					break; // 新加
 				}
 			}
 			if (!hasId) {
@@ -143,16 +144,15 @@ public class BaseDaoInterceptor implements Interceptor {
 	}
 
 	private void setResultClass(MappedStatement statement, Class<?> currentClass, String methodId)
-			throws NoSuchFieldException, SecurityException, IllegalArgumentException,
-			IllegalAccessException, ClassNotFoundException {
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException,
+			ClassNotFoundException {
 		if (methodId.matches("^query.*") && !methodId.matches(".*Count$")) {
 			List<ResultMap> resultMaps = statement.getResultMaps();
 			ResultMap resultMap = resultMaps.get(0);
 			Class<?> clazz = resultMap.getType();
 			Annotation a = currentClass.getAnnotation(RegisterDto.class);
 			if (a == null) {
-				LOGGER.error(currentClass.getName()
-						+ " not find annotation RegisterDto,please set it");
+				LOGGER.error(currentClass.getName() + " not find annotation RegisterDto,please set it");
 			}
 			clazz = ((RegisterDto) a).value();
 
@@ -168,22 +168,19 @@ public class BaseDaoInterceptor implements Interceptor {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void setClass(Object parameter, Class<?> currentClass) throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException {
+	private void setClass(Object parameter, Class<?> currentClass)
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		if (parameter instanceof Map) {
 			Annotation a = currentClass.getAnnotation(RegisterDto.class);
 			if (a == null) {
-				LOGGER.error(currentClass.getName()
-						+ " not find annotation RegisterDto,please set it");
+				LOGGER.error(currentClass.getName() + " not find annotation RegisterDto,please set it");
 			}
 			Class<?> clazz = ((RegisterDto) a).value();
-			((Map) parameter).put(DtoUtil.SPACE_TABLE_NAME, Class.forName(clazz.getName())
-					.newInstance());
+			((Map) parameter).put(DtoUtil.SPACE_TABLE_NAME, Class.forName(clazz.getName()).newInstance());
 		}
 	}
 
-	private boolean isBaseMethod(Class<?> currentClass, String methodId)
-			throws ClassNotFoundException {
+	private boolean isBaseMethod(Class<?> currentClass, String methodId) throws ClassNotFoundException {
 
 		Boolean isBaseMethod = Boolean.FALSE;
 		for (Method method : methods) {
@@ -215,7 +212,7 @@ public class BaseDaoInterceptor implements Interceptor {
 	private Class<?> getClass(String className) throws ClassNotFoundException {
 
 		Class<?> currentClass = classMap.get(className);
-		if(currentClass!=null)
+		if (currentClass != null)
 			return currentClass;
 
 		currentClass = Class.forName(className);
@@ -223,18 +220,17 @@ public class BaseDaoInterceptor implements Interceptor {
 			if (clazz.equals(BaseDao.class)) {
 				if (!classMap.containsKey(className)) {
 					lock.lock();
-					try{
+					try {
 						classMap.put(className, currentClass);
-					}finally {
+					} finally {
 						lock.unlock();
-				    }
+					}
 
-					
 				}
 				break;
 			}
 		}
-		
+
 		return currentClass;
 	}
 }

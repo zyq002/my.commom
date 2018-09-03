@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import my.com.annotation.Id;
-import my.com.annotation.NotColumn;	
+import my.com.annotation.NotColumn;
 
 public final class DtoUtil {
 	private final static Map<String, Class<?>> FIELD_TYPE_MAP = new HashMap<String, Class<?>>();
@@ -118,10 +118,12 @@ public final class DtoUtil {
 				continue;
 			}
 			String fieldName = field.getName();
-			 String column = fieldName.replaceAll("([A-Z])",
-			 "_$1").toLowerCase();
-			 fieldMap.put(fieldName, column);
-			//fieldMap.put(fieldName, fieldName);
+			/*
+			 * String column = fieldName.replaceAll("([A-Z])", "_$1").toLowerCase();
+			 */
+			String column = fieldName.replaceAll("([A-Z])", "_$1");
+			fieldMap.put(fieldName, column);
+			// fieldMap.put(fieldName, fieldName);
 		}
 
 		columnMap.put(className, fieldMap);
@@ -309,13 +311,12 @@ public final class DtoUtil {
 			if (i++ != 0)
 				sb.append(',');
 			if (isUpdateTime) {
-				sb.append("updateTime=NOW()");
+				sb.append(column.getValue() + "=NOW()");
 			} else if (isCreateTime && isNull(obj, column.getKey())) {
-				sb.append("createTime=NOW()");
+				sb.append(column.getValue() + "=NOW()");
 			} else {
 				sb.append(column.getValue()).append("=#{").append(column.getKey()).append('}');
 			}
-
 		}
 		return sb.toString();
 	}
@@ -339,7 +340,7 @@ public final class DtoUtil {
 			if (i++ != 0)
 				sb.append(',');
 			if (isUpdateTime) {
-				sb.append("updateTime=NOW()");
+				sb.append(column.getValue() + "=NOW()");
 			} else {
 				sb.append(column.getValue()).append("=#{").append(column.getKey()).append('}');
 			}
@@ -361,7 +362,7 @@ public final class DtoUtil {
 			if (i++ != 0)
 				sb.append(',');
 			if (isUpdateTime) {
-				sb.append("updateTime=NOW()");
+				sb.append(column.getValue() + "=NOW()");
 			} else {
 				sb.append(column.getValue()).append("=#{to.").append(column.getKey()).append('}');
 			}

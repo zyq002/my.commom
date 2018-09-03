@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.UpdateProvider;
 
 import my.com.base.impl.MyBatisTemplate;
+import my.com.base.impl.SqlFactory;
 
 /**
  * 继承此类注意：泛型为Serializable接口实现Bean,bean中使用@Id声明主键(不支持联合主键，只有一个属性是主键)，
@@ -20,32 +21,33 @@ import my.com.base.impl.MyBatisTemplate;
  */
 
 public interface BaseDao<T> {
+
 	/**
 	 * 插入数据
 	 * 
 	 * @param obj
 	 */
-	@InsertProvider(type = MyBatisTemplate.class, method = "insert")
+
+	@InsertProvider(type = SqlFactory.class, method = "insert")
 	@Options(useGeneratedKeys = false)
 	void insert(T obj);
 
-	@InsertProvider(type = MyBatisTemplate.class, method = "insertId")
-	@Options(useGeneratedKeys = true,keyProperty="id",keyColumn="id")
-	void insertId(T obj);
 	/**
 	 * 批量插入
 	 */
-	@InsertProvider(type = MyBatisTemplate.class, method = "insertBatch")
+
+	@InsertProvider(type = SqlFactory.class, method = "insertBatch")
 	@Options(useGeneratedKeys = false)
 	void insertBatch(List<T> objList);
 
+	 
 	/**
 	 * 根据主键更新数据中不为空的属
 	 * 
 	 * @param obj
 	 * @return
 	 */
-	@UpdateProvider(type = MyBatisTemplate.class, method = "updateNotNullById")
+	@UpdateProvider(type = SqlFactory.class, method = "updateNotNullById")
 	int updateNotNullById(T obj);
 
 	/**
@@ -54,7 +56,7 @@ public interface BaseDao<T> {
 	 * @param obj
 	 * @return
 	 */
-	@UpdateProvider(type = MyBatisTemplate.class, method = "updateById")
+	@UpdateProvider(type = SqlFactory.class, method = "updateById")
 	int updateById(T obj);
 
 	/**
@@ -63,7 +65,7 @@ public interface BaseDao<T> {
 	 * @param obj
 	 * @return
 	 */
-	@UpdateProvider(type = MyBatisTemplate.class, method = "updateToFrom")
+	@UpdateProvider(type = SqlFactory.class, method = "updateToFrom")
 	int updateToFrom(@Param("to") T to, @Param("from") T from);
 
 	/**
@@ -72,16 +74,16 @@ public interface BaseDao<T> {
 	 * @param id
 	 * @return
 	 */
-	@DeleteProvider(type = MyBatisTemplate.class, method = "deleteById")
-	int deleteById(String id);
+	@DeleteProvider(type = SqlFactory.class, method = "deleteById")
+	int deleteById(Object id);
 
 	/**
-	 * 根据对象中不为空的条件删除数据
+	 * 根据对象删除数据
 	 * 
 	 * @param id
 	 * @return
 	 */
-	@DeleteProvider(type = MyBatisTemplate.class, method = "deleteByObject")
+	@DeleteProvider(type = SqlFactory.class, method = "deleteByObject")
 	int deleteByObject(T obj);
 
 	/**
@@ -90,9 +92,9 @@ public interface BaseDao<T> {
 	 * @param id
 	 * @return
 	 */
-	@DeleteProvider(type = MyBatisTemplate.class, method = "deleteByParamNotEmpty")
+	@DeleteProvider(type = SqlFactory.class, method = "deleteByParamNotEmpty")
 	int deleteByParamNotEmpty(Map<String, Object> param);
-
+ 
 	/**
 	 * 根据参数中条件删除数据,key对应dto中的属性
 	 * 
