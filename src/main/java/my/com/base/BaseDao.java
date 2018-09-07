@@ -111,7 +111,7 @@ public interface BaseDao<T> {
 	 * @return
 	 */
 	@SelectProvider(type = MyBatisTemplate.class, method = "queryById")
-	T queryById(String id);
+	T queryById(Object id);
 
 	/**
 	 * 根据对象中不为空的属性查询列表

@@ -33,11 +33,8 @@ import my.com.base.BaseDao;
 @Intercepts({ @Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class }),
 		@Signature(type = Executor.class, method = "query", args = { MappedStatement.class, Object.class,
 				RowBounds.class, ResultHandler.class }) })
-/*@Component*/
+/* @Component */
 public class BaseDaoInterceptor implements Interceptor {
-
- 
-	
 
 	private static final Logger LOGGER = Logger.getLogger(BaseDaoInterceptor.class);
 	private static Method[] methods = BaseDao.class.getMethods();
@@ -87,8 +84,6 @@ public class BaseDaoInterceptor implements Interceptor {
 		System.out.println(properties.toString());
 	}
 
-	 
-	
 	private void setObject(final MappedStatement statement, final Object parameter, final String[] keys,
 			String[] keyColumns) {
 		if (statement.getSqlCommandType().equals(SqlCommandType.INSERT)) {
