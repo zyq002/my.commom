@@ -16,12 +16,6 @@ import static my.com.Util.DtoUtil.whereColumnNotEmpty;
 import static my.com.Util.DtoUtil.whereColumnNotEmptyIN;
 import static my.com.Util.DtoUtil.whereColumnNotNull;
 import static my.com.Util.DtoUtil.whereColumnNotNullToFrom;
-import static org.apache.ibatis.jdbc.SqlBuilder.BEGIN;
-import static org.apache.ibatis.jdbc.SqlBuilder.FROM;
-import static org.apache.ibatis.jdbc.SqlBuilder.ORDER_BY;
-import static org.apache.ibatis.jdbc.SqlBuilder.SELECT;
-import static org.apache.ibatis.jdbc.SqlBuilder.SQL;
-import static org.apache.ibatis.jdbc.SqlBuilder.WHERE;
 
 import java.io.Serializable;
 import java.util.HashMap;
