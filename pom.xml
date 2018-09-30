@@ -9,7 +9,7 @@
 		<relativePath>../my.parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>my.commom</artifactId>
-	<name>my.remote</name>
+	<name>my.commom</name>
 	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>
 	<properties>
