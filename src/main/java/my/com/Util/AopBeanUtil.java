@@ -53,7 +53,29 @@ public class AopBeanUtil implements ApplicationContextAware {
 				 * Method method = bean.getClass().getMethod(setValue.method(),
 				 * clazz.getDeclaredField(setValue.paramField()).getType());
 				 */
+				Field paramField = clazz.getDeclaredField(setValue.paramField());
+				paramField.setAccessible(true);
+				//
+				Field targetField = null;
+				for (Object obj : collection) {
+					Object paramValue = paramField.get(obj);
+					if (paramValue == null) {
+						continue;
+					}
+					Object value = method.invoke(bean, paramValue);// 执行被方法
+					if (value != null) {
+						if (targetField == null) {
+							//
+							targetField = value.getClass().getDeclaredField(setValue.targetField());
+							targetField.setAccessible(true);
+						}
+						value = targetField.get(value);
+					}
+					//设置值
+					field.set(obj, value);
+				}
 			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 		}
 	}
