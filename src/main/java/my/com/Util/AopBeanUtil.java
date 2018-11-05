@@ -33,21 +33,22 @@ public class AopBeanUtil implements ApplicationContextAware {
 		// 获取到集中元素的class对象
 		Class<?> clazz = collection.iterator().next().getClass();
 		// 获取里面的字段
-		Field[] fields = clazz.getFields();
+		Field[] fields = clazz.getDeclaredFields();
 		// 遍历处理带有指定注解的字段
 		for (Field field : fields) {
 			// 获取字段的注解如不包含SetValue着continue
 			SetValue setValue = field.getAnnotation(SetValue.class);
+			System.out.println("setValue------------------------------------>" + setValue);
 			if (setValue == null) {
 				continue;
 			}
 			// 设置访问权限
 			field.setAccessible(true);
 			// 获取需要用的bean
-			Object bean = this.context.getBean(setValue.getClass());
+			Object bean = this.context.getBean(setValue.beanClass());
 			try {
 				// 获取要调用的方法 参数1：方法名称,2:
-				Method method = setValue.getClass().getMethod(setValue.method(),
+				Method method = setValue.beanClass().getMethod(setValue.method(),
 						clazz.getDeclaredField(setValue.paramField()).getType());
 				/*
 				 * Method method = bean.getClass().getMethod(setValue.method(),
@@ -71,7 +72,7 @@ public class AopBeanUtil implements ApplicationContextAware {
 						}
 						value = targetField.get(value);
 					}
-					//设置值
+					// 设置值
 					field.set(obj, value);
 				}
 			} catch (Exception ex) {
