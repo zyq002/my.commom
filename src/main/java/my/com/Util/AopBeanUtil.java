@@ -15,16 +15,38 @@ import my.com.annotation.SetValue;
 @Component
 public class AopBeanUtil implements ApplicationContextAware {
 
-	public AopBeanUtil() {
-		System.out.println("AopBeanUtil---------------->");
-	}
-
 	private ApplicationContext context;
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		this.context = applicationContext;
 	}
+
+	private Method getClassAllMethod(Class clazz, String methodName, Class<?>... parameterTypes)
+			throws SecurityException {
+		Method retMethod = null;
+		try {
+			retMethod = clazz.getMethod(methodName, parameterTypes);
+		} catch (NoSuchMethodException ex) {
+			try {
+				retMethod = clazz.getSuperclass().getMethod(methodName, parameterTypes);
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return retMethod;
+
+	}
+	/*
+	 * private Method getClassAllMethod(Class clazz, String methodName) throws
+	 * SecurityException, NoSuchMethodException { Method retMethod = null; Method[]
+	 * methods = clazz.getMethods(); for (Method method : methods) { if
+	 * (methodName.equals(method.getName())) { retMethod = method; } } return
+	 * retMethod;
+	 * 
+	 * }
+	 */
 
 	public void setFieIdValueForCollection(Collection collection) {
 		if (CollectionUtils.isEmpty(collection)) {
@@ -38,7 +60,6 @@ public class AopBeanUtil implements ApplicationContextAware {
 		for (Field field : fields) {
 			// 获取字段的注解如不包含SetValue着continue
 			SetValue setValue = field.getAnnotation(SetValue.class);
-			System.out.println("setValue------------------------------------>" + setValue);
 			if (setValue == null) {
 				continue;
 			}
@@ -48,12 +69,13 @@ public class AopBeanUtil implements ApplicationContextAware {
 			Object bean = this.context.getBean(setValue.beanClass());
 			try {
 				// 获取要调用的方法 参数1：方法名称,2:
-				Method method = setValue.beanClass().getMethod(setValue.method(),
-						clazz.getDeclaredField(setValue.paramField()).getType());
+
 				/*
-				 * Method method = bean.getClass().getMethod(setValue.method(),
+				 * Method method = setValue.beanClass().getMethod(setValue.method(),
 				 * clazz.getDeclaredField(setValue.paramField()).getType());
 				 */
+				Method method = setValue.beanClass().getMethod(setValue.method(), setValue.paramtype());
+
 				Field paramField = clazz.getDeclaredField(setValue.paramField());
 				paramField.setAccessible(true);
 				//

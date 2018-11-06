@@ -71,7 +71,7 @@ public abstract class BaseService<T> implements IBaseService<T> {
 	}
 
 	@Override
-	public int deleteById(String id) {
+	public int deleteById(Object id) {
 		return getDao().deleteById(id);
 	}
 
@@ -91,7 +91,7 @@ public abstract class BaseService<T> implements IBaseService<T> {
 	}
 
 	@Override
-	public T queryById(String id) {
+	public T queryById(Object id) {
 		return getDao().queryById(id);
 	}
 

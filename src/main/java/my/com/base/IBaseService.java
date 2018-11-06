@@ -53,7 +53,7 @@ public interface IBaseService<T> {
 	 * @param id
 	 * @return
 	 */
-	int deleteById(String id);
+	int deleteById(Object id);
 
 	/**
 	 * 根据对象中不为空的条件删除数据
@@ -85,7 +85,7 @@ public interface IBaseService<T> {
 	 * @param id
 	 * @return
 	 */
-	T queryById(String id);
+	T queryById(Object id);
 
 	/**
 	 * 根据对象中不为空的属性查询列表

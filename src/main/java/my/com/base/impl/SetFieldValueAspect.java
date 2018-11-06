@@ -16,17 +16,12 @@ import my.com.Util.AopBeanUtil;
 @Aspect
 public class SetFieldValueAspect {
 
-	public SetFieldValueAspect() {
-		System.out.println("SetFieldValueAspect------------------------->");
-	}
-
 	@Autowired
 	private AopBeanUtil aopBeanUtil;
 
 	@Around("@annotation(my.com.annotation.NeedSetValue)")
 	public Object doSetFieldValue(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 		Object ret = proceedingJoinPoint.proceed();
-		System.out.println("doSetFieldValue---------------------------->"+ret);
 		if (ret instanceof Collection) {
 			this.aopBeanUtil.setFieIdValueForCollection((Collection) ret);
 		} else {

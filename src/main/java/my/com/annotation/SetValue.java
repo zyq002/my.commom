@@ -17,4 +17,5 @@ public @interface SetValue {
 
 	String targetField();
 
+	Class<?> paramtype() default Object.class;
 }
