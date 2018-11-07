@@ -10,7 +10,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import my.com.Util.AopBeanUtil;
+import my.com.common.AopBeanUtil;
 
 @Component
 @Aspect
