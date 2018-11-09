@@ -33,7 +33,7 @@ import my.com.base.BaseDao;
 @Intercepts({ @Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class }),
 		@Signature(type = Executor.class, method = "query", args = { MappedStatement.class, Object.class,
 				RowBounds.class, ResultHandler.class }) })
-/* @Component */
+@Component
 public class BaseDaoInterceptor implements Interceptor {
 
 	private static final Logger LOGGER = Logger.getLogger(BaseDaoInterceptor.class);

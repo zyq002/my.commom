@@ -1,4 +1,4 @@
-package my.com.common;
+package my.com.base.impl;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
