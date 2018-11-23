@@ -77,7 +77,7 @@ public class MakeOrderNum {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+	 
 	}
 
 }
