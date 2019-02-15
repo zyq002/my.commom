@@ -46,8 +46,6 @@
 			</plugin>
 		</plugins>
 		<finalName>${project.artifactId}</finalName>
-		<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
-		<outputDirectory>${basedir}/src/main/webapp/WEB-INF/classes</outputDirectory>
 	</build>
 	<distributionManagement>
 		<snapshotRepository>
