@@ -2,6 +2,8 @@ package my.com.Util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.springframework.util.StringUtils;
 
 /**
  * 
@@ -82,8 +86,6 @@ public class DateUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		return sdf.format(date);
 	}
-	
- 
 
 	public static String format(Date date, String format) {
 
@@ -112,20 +114,20 @@ public class DateUtil {
 			return null;
 		}
 	}
-	
+
 	public static String parseTime2(String time) {
-	    try {
-	        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-	        // SimpleDateFormat的parse(String time)方法将String转换为Date
-	        Date date = simpleDateFormat.parse(time);
-	        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	        // SimpleDateFormat的format(Date date)方法将Date转换为String
-	        String formattedTime = simpleDateFormat.format(date);
-	        return formattedTime;
-	    } catch (Exception e) {
-	    	e.printStackTrace();
+		try {
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+			// SimpleDateFormat的parse(String time)方法将String转换为Date
+			Date date = simpleDateFormat.parse(time);
+			simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			// SimpleDateFormat的format(Date date)方法将Date转换为String
+			String formattedTime = simpleDateFormat.format(date);
+			return formattedTime;
+		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
-	    }
+		}
 	}
 
 	public static Date addDays(Date date, int step) {
@@ -144,9 +146,9 @@ public class DateUtil {
 	}
 
 	/*
-	 * public static int interval(Date date1, Date date2) { Long l =
-	 * date1.getTime() - date2.getTime(); Long day = l / (24 * 60 * 60 * 1000);
-	 * if (date1.compareTo(date2) > 0) return day.intValue() + 1; return
+	 * public static int interval(Date date1, Date date2) { Long l = date1.getTime()
+	 * - date2.getTime(); Long day = l / (24 * 60 * 60 * 1000); if
+	 * (date1.compareTo(date2) > 0) return day.intValue() + 1; return
 	 * Math.abs(day.intValue()); }
 	 */
 
@@ -414,7 +416,7 @@ public class DateUtil {
 	}
 
 	public static void main(String[] args) throws ParseException {
-		DateUtil.parse(DateUtil.now("yyyy-MM-dd HH"),"yyyy-MM-dd HH");
+		DateUtil.parse(DateUtil.now("yyyy-MM-dd HH"), "yyyy-MM-dd HH");
 		System.out.println();
 	}
 
@@ -473,8 +475,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 判断时间是否过期 例: 判断2015-1-6 18:02:02,是否过期,过期时间为1分钟, 如果当前时间为2015-1-6
-	 * 18:04:02,则已经过期
+	 * 判断时间是否过期 例: 判断2015-1-6 18:02:02,是否过期,过期时间为1分钟, 如果当前时间为2015-1-6 18:04:02,则已经过期
 	 * 
 	 * @param 需要判断的时间
 	 *            createTime
@@ -526,14 +527,13 @@ public class DateUtil {
 	 * @return
 	 */
 	/*
-	 * public static int getBetweenDay(Date beginMonth, Date endMonth) {
-	 * Calendar bcalendar = new GregorianCalendar(); Calendar ecalendar = new
+	 * public static int getBetweenDay(Date beginMonth, Date endMonth) { Calendar
+	 * bcalendar = new GregorianCalendar(); Calendar ecalendar = new
 	 * GregorianCalendar(); bcalendar.setTime(beginMonth);
 	 * ecalendar.setTime(endMonth); int diffDays = 0; if
-	 * (bcalendar.get(Calendar.YEAR) == ecalendar.get(Calendar.YEAR)) { diffDays
-	 * = ecalendar.get(Calendar.DAY_OF_YEAR) -
-	 * bcalendar.get(Calendar.DAY_OF_YEAR); } else diffDays =
-	 * ecalendar.get(Calendar.DAY_OF_MONTH) + (365 -
+	 * (bcalendar.get(Calendar.YEAR) == ecalendar.get(Calendar.YEAR)) { diffDays =
+	 * ecalendar.get(Calendar.DAY_OF_YEAR) - bcalendar.get(Calendar.DAY_OF_YEAR); }
+	 * else diffDays = ecalendar.get(Calendar.DAY_OF_MONTH) + (365 -
 	 * bcalendar.get(Calendar.DAY_OF_YEAR)); return diffDays; }
 	 */
 
@@ -662,7 +662,7 @@ public class DateUtil {
 	public static Date onlineDate() {
 		return parse(onlineDate, FORMAT_SHORT);
 	}
-	
+
 	/**
 	 * string转date(精确到秒) (yyyy-MM-dd HH:mm:ss)
 	 * 
@@ -670,13 +670,32 @@ public class DateUtil {
 	 */
 	public static Date getDateByString(String date) {
 		try {
-		if (date != null && !date.equals("")) {
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			return format.parse(date);
-		}
+			if (date != null && !date.equals("")) {
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				return format.parse(date);
+			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	 * 适用于1.8的 LocalDateTime 类型参数时间格式
+	 * 
+	 * @param date
+	 *            LocalDateTime 类型 时间
+	 * @param dateTimeFormatterPattern
+	 *            格式化样式 默认yyyy-MM-dd HH:mm:ss
+	 * @return string
+	 */
+	public static String getLocatTimeDateFormatter(LocalDateTime date, String dateTimeFormatterPattern) {
+		if (null == date) {
+			date = LocalDateTime.now();
+		}
+		if(StringUtils.isEmpty(dateTimeFormatterPattern)) {
+			dateTimeFormatterPattern = DateUtil.FORMAT_LONG;
+		}
+		return date.format(DateTimeFormatter.ofPattern(dateTimeFormatterPattern));
 	}
 }
