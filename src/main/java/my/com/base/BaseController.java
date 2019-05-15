@@ -1,17 +1,14 @@
 package my.com.base;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.View;
 
-import org.apache.ibatis.annotations.Lang;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import my.com.common.User;
 
-public class BaseController {
+public abstract class BaseController {
 
 	public Logger logger = Logger.getLogger(BaseController.class);
 
