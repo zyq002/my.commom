@@ -1,9 +1,7 @@
 package my.com.common;
 
 import java.io.Serializable;
-
-import my.com.annotation.NotColumn;
-
+ 
 public class PageInfo implements Serializable {
 	private static final long serialVersionUID = -6830864636737268480L;
 	
@@ -14,17 +12,17 @@ public class PageInfo implements Serializable {
     /**
      * 分页时当前查询哪一页
      */
-	@NotColumn
+	 
     private Integer currentPage;
 	
     /**
      * 分页时每页记录数
      */
-	@NotColumn
+ 
     protected Integer pageSize;
 	
 	//记录总数,这个是输出
-	@NotColumn
+ 
 	private Integer recordCount; 
 
 	// 1 asc 2 desc 仅仅在soa里面使用

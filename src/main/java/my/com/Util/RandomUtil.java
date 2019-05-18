@@ -3,7 +3,9 @@ package my.com.Util;
 import java.util.Random;
 
 public class RandomUtil {
-	private static String base = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";     
+	
+	private static String base = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	
 	public static String getRandomString(int length) { //length表示生成字符串的长度  
 	    Random random = new Random();     
 	    StringBuffer sb = new StringBuffer();     
