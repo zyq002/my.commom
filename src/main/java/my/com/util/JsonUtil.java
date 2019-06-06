@@ -1,4 +1,4 @@
-package my.com.Util;
+package my.com.util;
 
 import java.io.IOException;
 import java.util.logging.Level;

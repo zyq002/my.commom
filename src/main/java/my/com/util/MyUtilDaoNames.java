@@ -1,4 +1,4 @@
-package my.com.Util;
+package my.com.util;
 
 public class MyUtilDaoNames {
 	public static final String ID = "id";

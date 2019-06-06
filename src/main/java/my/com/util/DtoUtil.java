@@ -1,4 +1,4 @@
-package my.com.Util;
+package my.com.util;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;

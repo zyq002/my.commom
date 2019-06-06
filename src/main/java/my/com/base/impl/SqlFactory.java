@@ -1,21 +1,21 @@
 package my.com.base.impl;
 
-import static my.com.Util.DtoUtil.SPACE_TABLE_NAME;
-import static my.com.Util.DtoUtil.caculationColumnList;
-import static my.com.Util.DtoUtil.id;
-import static my.com.Util.DtoUtil.queryColumn;
-import static my.com.Util.DtoUtil.returnInsertColumnsDefine;
-import static my.com.Util.DtoUtil.returnInsertColumnsName;
-import static my.com.Util.DtoUtil.returnInsertColumnsValue;
-import static my.com.Util.DtoUtil.returnUpdateSet;
-import static my.com.Util.DtoUtil.returnUpdateSetFull;
-import static my.com.Util.DtoUtil.returnUpdateSetToFrom;
-import static my.com.Util.DtoUtil.tableName;
-import static my.com.Util.DtoUtil.whereColumn;
-import static my.com.Util.DtoUtil.whereColumnNotEmpty;
-import static my.com.Util.DtoUtil.whereColumnNotEmptyIN;
-import static my.com.Util.DtoUtil.whereColumnNotNull;
-import static my.com.Util.DtoUtil.whereColumnNotNullToFrom;
+import static my.com.util.DtoUtil.SPACE_TABLE_NAME;
+import static my.com.util.DtoUtil.caculationColumnList;
+import static my.com.util.DtoUtil.id;
+import static my.com.util.DtoUtil.queryColumn;
+import static my.com.util.DtoUtil.returnInsertColumnsDefine;
+import static my.com.util.DtoUtil.returnInsertColumnsName;
+import static my.com.util.DtoUtil.returnInsertColumnsValue;
+import static my.com.util.DtoUtil.returnUpdateSet;
+import static my.com.util.DtoUtil.returnUpdateSetFull;
+import static my.com.util.DtoUtil.returnUpdateSetToFrom;
+import static my.com.util.DtoUtil.tableName;
+import static my.com.util.DtoUtil.whereColumn;
+import static my.com.util.DtoUtil.whereColumnNotEmpty;
+import static my.com.util.DtoUtil.whereColumnNotEmptyIN;
+import static my.com.util.DtoUtil.whereColumnNotNull;
+import static my.com.util.DtoUtil.whereColumnNotNullToFrom;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
 
-import my.com.Util.MYBATIS_SPECIAL_STRING;
+import my.com.util.MYBATIS_SPECIAL_STRING;
 
 public class SqlFactory<T extends Serializable> {
 

@@ -1,4 +1,4 @@
-package my.com.Util;
+package my.com.util;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

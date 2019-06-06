@@ -25,10 +25,10 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-import my.com.Util.DtoUtil;
 import my.com.annotation.Id;
 import my.com.annotation.RegisterDto;
 import my.com.base.BaseDao;
+import my.com.util.DtoUtil;
 
 @Intercepts({ @Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class }),
 		@Signature(type = Executor.class, method = "query", args = { MappedStatement.class, Object.class,
