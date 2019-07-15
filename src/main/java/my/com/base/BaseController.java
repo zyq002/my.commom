@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.remote.dto.UserDto;
+import com.remote.entity.dto.user.UserDto;
 
 public abstract class BaseController {
 
