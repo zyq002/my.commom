@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import my.com.common.User;
+import com.remote.dto.UserDto;
 
 public abstract class BaseController {
 
@@ -46,7 +46,7 @@ public abstract class BaseController {
 	 * 获取用户信息
 	 * 
 	 */
-	public User user() {
+	public UserDto user() {
 		return null;
 	}
 

@@ -61,6 +61,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>my.parent</groupId>
+			<artifactId>my.remote</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
