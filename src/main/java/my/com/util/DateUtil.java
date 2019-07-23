@@ -145,13 +145,6 @@ public class DateUtil {
 		return c.getTime();
 	}
 
-	/*
-	 * public static int interval(Date date1, Date date2) { Long l = date1.getTime()
-	 * - date2.getTime(); Long day = l / (24 * 60 * 60 * 1000); if
-	 * (date1.compareTo(date2) > 0) return day.intValue() + 1; return
-	 * Math.abs(day.intValue()); }
-	 */
-
 	public static long getNowTimes() {
 		Calendar now = Calendar.getInstance();
 		return now.getTimeInMillis();
@@ -235,9 +228,7 @@ public class DateUtil {
 				stringBuffer.append(num == 0 ? "00" : num);
 			}
 		}
-		// stringBuffer.append((longs[1] == 0 ? "00" : longs[1]) + ":" +
-		// (longs[2] == 0 ? "00" : longs[2]) + ":" + (longs[3] == 0 ? "00" :
-		// longs[3]));
+
 		return stringBuffer.toString();
 	}
 
@@ -270,10 +261,8 @@ public class DateUtil {
 	/**
 	 * 计算两个日期之间相差的天数
 	 * 
-	 * @param start
-	 *            较小的时间
-	 * @param end
-	 *            较大的时间
+	 * @param start 较小的时间
+	 * @param end   较大的时间
 	 * @return 相差天数
 	 * @throws ParseException
 	 */
@@ -304,26 +293,6 @@ public class DateUtil {
 		}
 		return daysBetween;
 	}
-
-	/*
-	 * public static int monthsDiff(Date start,Date end){
-	 * 
-	 * }
-	 */
-
-	/*
-	 * Calendar c1 = Calendar.getInstance(); c1.setTime(smdate);
-	 * c1.set(Calendar.HOUR_OF_DAY, 0); c1.set(Calendar.MINUTE, 0);
-	 * c1.set(Calendar.SECOND, 0); long time1 = c1.getTime().getTime();
-	 * 
-	 * 
-	 * Calendar c2 = Calendar.getInstance(); c2.setTime(bdate);
-	 * c2.set(Calendar.HOUR_OF_DAY, 0); c2.set(Calendar.MINUTE, 0);
-	 * c2.set(Calendar.SECOND, 0); long time2 = c2.getTime().getTime(); Long
-	 * between_days = (Math.abs(time2 - time1) +10 )/ (1000 * 3600 * 24);
-	 * System.out.println(c2.get(Calendar.d) - c1.get(Calendar.MINUTE)); return
-	 * between_days.intValue(); }
-	 */
 
 	/**
 	 * 是否有效时间
@@ -477,10 +446,8 @@ public class DateUtil {
 	/**
 	 * 判断时间是否过期 例: 判断2015-1-6 18:02:02,是否过期,过期时间为1分钟, 如果当前时间为2015-1-6 18:04:02,则已经过期
 	 * 
-	 * @param 需要判断的时间
-	 *            createTime
-	 * @param 过期时间i
-	 *            ,单位分钟
+	 * @param 需要判断的时间 createTime
+	 * @param 过期时间i   ,单位分钟
 	 * @return
 	 */
 	public static boolean isExpired(Date createTime, int i) {
@@ -494,10 +461,8 @@ public class DateUtil {
 	/**
 	 * 算出一共相差多少个月
 	 * 
-	 * @param beginMonth
-	 *            开始日期
-	 * @param endMonth
-	 *            结束日期
+	 * @param beginMonth 开始日期
+	 * @param endMonth   结束日期
 	 * @return
 	 */
 	public static int getBetweenMonth(Date beginMonth, Date endMonth) {
@@ -525,16 +490,6 @@ public class DateUtil {
 	 * @param beginMonth
 	 * @param endMonth
 	 * @return
-	 */
-	/*
-	 * public static int getBetweenDay(Date beginMonth, Date endMonth) { Calendar
-	 * bcalendar = new GregorianCalendar(); Calendar ecalendar = new
-	 * GregorianCalendar(); bcalendar.setTime(beginMonth);
-	 * ecalendar.setTime(endMonth); int diffDays = 0; if
-	 * (bcalendar.get(Calendar.YEAR) == ecalendar.get(Calendar.YEAR)) { diffDays =
-	 * ecalendar.get(Calendar.DAY_OF_YEAR) - bcalendar.get(Calendar.DAY_OF_YEAR); }
-	 * else diffDays = ecalendar.get(Calendar.DAY_OF_MONTH) + (365 -
-	 * bcalendar.get(Calendar.DAY_OF_YEAR)); return diffDays; }
 	 */
 
 	/**
@@ -598,10 +553,7 @@ public class DateUtil {
 		Calendar ncalendar = new GregorianCalendar();
 		ncalendar.setTime(endDate);
 
-		// int month = ocalendar.get(Calendar.MONTH);
 		int day = ocalendar.get(Calendar.DAY_OF_MONTH);
-		// int maxDayOfMonth;
-		// int dayOfMonth;
 
 		for (int i = 0; i < periods; i++) {
 			map = new HashMap<>();
@@ -637,9 +589,7 @@ public class DateUtil {
 
 	// 获取下一个工作日
 	public static Date getNextWorkDay() {
-		// TimeZone.getTimeZone("GMT+8")
 		Calendar gc = Calendar.getInstance(Locale.CHINA);
-		// gc.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
 		int week = gc.get(Calendar.DAY_OF_WEEK);
 		if (week == Calendar.SATURDAY) {
 			gc.add(Calendar.DAY_OF_YEAR, 2);
@@ -683,17 +633,15 @@ public class DateUtil {
 	/**
 	 * 适用于1.8的 LocalDateTime 类型参数时间格式
 	 * 
-	 * @param date
-	 *            LocalDateTime 类型 时间
-	 * @param dateTimeFormatterPattern
-	 *            格式化样式 默认yyyy-MM-dd HH:mm:ss
+	 * @param date                     LocalDateTime 类型 时间
+	 * @param dateTimeFormatterPattern 格式化样式 默认yyyy-MM-dd HH:mm:ss
 	 * @return string
 	 */
 	public static String getLocatTimeDateFormatter(LocalDateTime date, String dateTimeFormatterPattern) {
 		if (null == date) {
 			date = LocalDateTime.now();
 		}
-		if(StringUtils.isEmpty(dateTimeFormatterPattern)) {
+		if (StringUtils.isEmpty(dateTimeFormatterPattern)) {
 			dateTimeFormatterPattern = DateUtil.FORMAT_LONG;
 		}
 		return date.format(DateTimeFormatter.ofPattern(dateTimeFormatterPattern));
