@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 
 public class Page<T> implements IPage<T> {
 	private static final long serialVersionUID = 1L;
@@ -70,6 +71,12 @@ public class Page<T> implements IPage<T> {
 	public IPage<T> setCurrent(long current) {
 		this.current = current;
 		return this;
+	}
+
+	@Override
+	public List<OrderItem> orders() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
