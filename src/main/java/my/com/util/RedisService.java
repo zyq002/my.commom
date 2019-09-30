@@ -13,13 +13,14 @@ import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.ZSetOperations;
 
- 
 public class RedisService {
-	
-	
-	@Autowired
+
 	private RedisTemplate redisTemplate;
- 
+
+	public RedisService(RedisTemplate redisTemplate) {
+		this.redisTemplate = redisTemplate;
+	}
+
 	/**
 	 * 写入缓存
 	 * 
